@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Tasks from "./tasks";
 //create your first component
 
@@ -8,7 +8,7 @@ const ToDoList = () => {
 
 	const [tasksList, setTasksList] = useState([])
 	const [task, setTasks] = useState('')
-
+	
 
 	const addTasks = (e) => {
 		if (e.key === 'Enter' && task !== '') {
@@ -18,6 +18,18 @@ const ToDoList = () => {
 	}
 
 	console.log(tasksList)
+//Connection with the todo API
+// const createUser = () =>{
+// fetch('https://playground.4geeks.com/todo/users/mateo1627', {
+// method:'POST',
+
+// })
+//   .then((response) => response.json())
+//   .then((data) => console.log(data))
+//   .catch(error => console.log(error))
+  
+
+// }
 
 
 	const readTask = (e) => {
@@ -26,6 +38,22 @@ const ToDoList = () => {
 
 	console.log(task)
 
+	const	getUser = () =>{
+		fetch('https://playground.4geeks.com/todo/users/mateo1627', {
+		
+		})
+		  .then((response) => response.json())
+		  .then((data) => console.log(data.todos))
+		  .catch((error) => console.log(error))
+		  
+		
+		}
+   //Getting the user
+	useEffect(() => {  
+	
+		getUser()
+	}
+	, []);
 	return (
 
 		<div className="container col-6 mt-5">
