@@ -2,14 +2,13 @@ import React from "react";
 import Delete from "./delete";
 
 
-const Tasks = (props) => {
+const Tasks = ({tasksList, setTasksList}) => {
     return (
         <ul className="list-group">
-            {props.taskList.map((element, index) => (
-                <li key={index} className="list-group-item w-100">{element}<Delete /></li>
+            {tasksList.map((element, index) => (
+                <li key={index} className="list-group-item d-flex justify-content-between">{element}<Delete taskKey={index} tasksList={tasksList} setTasksList={setTasksList}/></li>
             ))}
         </ul>
-        
     )
 }
 

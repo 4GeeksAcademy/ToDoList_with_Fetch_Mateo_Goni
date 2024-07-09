@@ -1,9 +1,14 @@
 import React from "react";
 
-const Delete = (props) => {
+const Delete = ({taskKey, tasksList, setTasksList}) => {
+console.log({taskKey, tasksList, setTasksList})
+const eliminar = () =>{
+const newTasksList = tasksList.filter((_,index)=> index !== taskKey)
+setTasksList(newTasksList)
+
+}
     return(
-        <div className="justify-content-end d-flex">❌
-        </div>
+        <span onClick={eliminar}>❌</span>
     )
 }
 
