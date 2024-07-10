@@ -8,50 +8,92 @@ const ToDoList = () => {
 
 	const [tasksList, setTasksList] = useState([])
 	const [task, setTasks] = useState('')
-	
+
 
 	const addTasks = (e) => {
 		if (e.key === 'Enter' && task !== '') {
-			setTasksList([...tasksList, task])
+			//setTasksList([...tasksList, task])
+			addTasksToList()
 			setTasks('')
 		}
 	}
 
+
+	const addTasksToList = () =>{
+		fetch('https://playground.4geeks.com/todo/todos/mateo1627',{
+         method:'POST',
+		 body: JSON.stringify({
+          label:task,
+		  is_done:false
+		 }),
+		 headers:{
+		"Content-Type": "application/json"
+		 }
+		}).then((response) =>{
+			if(response.status ===201){
+				getUser()
+			}return response.json()
+			
+		})
+		.then((data) => console.log(data))
+	    .catch((error) => (error))
+	}   
 	console.log(tasksList)
+
+
+
+
+
 //Connection with the todo API
-// const createUser = () =>{
-// fetch('https://playground.4geeks.com/todo/users/mateo1627', {
-// method:'POST',
-
-// })
-//   .then((response) => response.json())
-//   .then((data) => console.log(data))
-//   .catch(error => console.log(error))
-  
-
-// }
-
-
+ const createUser = () =>{
+ fetch('https://playground.4geeks.com/todo/users/mateo1627', {
+ method:'POST',
+headers: {
+	"Content-Type": "application/json"
+}
+ })
+   .then((response) =>{
+    if(response.status === 201){
+		getUser()
+	}
+   
+   return response.json()
+})
+   .then((data) => console.log(data))
+   .catch(error => console.log(error))
+ }
 	const readTask = (e) => {
 		setTasks(e.target.value)
 	}
 
 	console.log(task)
 
-	const	getUser = () =>{
-		fetch('https://playground.4geeks.com/todo/users/mateo1627', {
+  //Getting the user
+	
+  const	getUser = () =>{
+		fetch('https://playground.4geeks.com/todo/users/mateo1627')
 		
-		})
-		  .then((response) => response.json())
-		  .then((data) => console.log(data.todos))
+	
+		  .then((response) => {
+			if(response.status === 404) {
+			createUser();
+		}return response.json()})
+		
+		  .then((data) => setTasksList(data.todos))
 		  .catch((error) => console.log(error))
 		  
 		
 		}
-   //Getting the user
+    //     const delete = () => {
+	// 		fetch('https://playground.4geeks.com/todo/users/mateo1627', {
+	//         method:'DELETE'
+	// 		})
+	// }
+ 
 	useEffect(() => {  
-	
+	   // createUser()
 		getUser()
+	    //deleteInfo()
 	}
 	, []);
 	return (
@@ -59,10 +101,11 @@ const ToDoList = () => {
 		<div className="container col-6 mt-5">
 			<h1 className="display-1 text-secondary">ToDoList</h1>
 			<input className="form-control mb-1" type="text" placeholder="Add tasks" onChange={readTask} onKeyDown={addTasks} value={task} />
-			<Tasks tasksList={tasksList} setTasksList={setTasksList} />
+			<Tasks tasksList={tasksList} setTasksList={setTasksList} getUser={getUser}/>
 			<div className="items-left">
 				{tasksList.length} item{tasksList.length !== 1 ? 's' : ''} left
 			</div>
+		
 		</div>
 
 	);
