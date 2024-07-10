@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Tasks from "./tasks";
+import EditTask from "./editTask"
 //create your first component
 
 
@@ -31,14 +32,20 @@ const ToDoList = () => {
 		 }
 		}).then((response) =>{
 			if(response.status ===201){
-				getUser()
-			}return response.json()
-			
+			//	getUser()
+			return response.json()
+			}
+			return false;
 		})
-		.then((data) => console.log(data))
+		.then((data) => {
+			if(data){
+				setTasksList(tasksList.concat(data))
+			}
+		})
 	    .catch((error) => (error))
 	}   
 	console.log(tasksList)
+
 
 
 

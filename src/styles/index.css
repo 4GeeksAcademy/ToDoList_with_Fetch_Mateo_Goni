@@ -16,10 +16,10 @@
     color: #6c757d;
 }
 
-span {
+ li span:nth-child(2) {
     opacity: 0;
     transition: opacity 0.3s;
 }
-li:hover span{
+li:hover  span:nth-child(2){
     opacity: 1;
 }

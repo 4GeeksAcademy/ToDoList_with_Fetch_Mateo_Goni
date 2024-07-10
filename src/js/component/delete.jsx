@@ -20,7 +20,7 @@ fetch(`https://playground.4geeks.com/todo/todos/${taskKey}`, {
 
 }
     return(
-        <span  onClick={eliminar}>❌</span>
+        <span role="button" className="ms-3"  onClick={eliminar}>❌</span>
     )
 }
 
